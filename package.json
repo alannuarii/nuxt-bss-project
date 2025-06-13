@@ -1,0 +1,22 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.35.0",
+    "@nuxt/eslint": "^1.4.1",
+    "bootstrap": "^5.3.6",
+    "eslint": "^9.28.0",
+    "mysql2": "^3.14.1",
+    "nuxt": "^3.17.5",
+    "vue": "^3.5.16",
+    "vue-router": "^4.5.1"
+  }
+}
