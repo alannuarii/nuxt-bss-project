@@ -14,7 +14,7 @@ import Header from "@/components/Header.vue";
 
 // Metadata halaman
 useHead({
-  title: "Dashboard PLTD Tahuna",
+  title: "BSS Optima",
   meta: [
     {
       name: "description",

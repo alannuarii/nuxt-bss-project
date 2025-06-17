@@ -1,81 +1,80 @@
 <template>
-  <div class="card bg-dark rounded-0 border-2 border-light p-2 col-md-6">
-    <!-- PLTS -->
-    <div class="mb-2">
-      <h5 class="text-light">PLTS</h5>
-      <template v-if="lvsw1Data && lvsw2Data">
-        <span class="badge rounded-0" :class="lvsw1Data[0]?._value + lvsw2Data[0]?._value === 0 ? 'text-bg-warning' : 'text-bg-success'">
-          {{ lvsw1Data[0]?._value + lvsw2Data[0]?._value === 0 ? "Standby" : "Operating" }}
-        </span>
-      </template>
-      <div v-else class="spinner-border spinner-border-sm text-light" role="status"></div>
+  <!-- PLTS -->
+  <div class="mb-2">
+    <h5 class="text-light">PLTS Sangihe</h5>
+    <div v-if="lvsw1Data && lvsw2Data">
+      <span class="badge rounded-0" :class="lvsw1Data[0]?._value + lvsw2Data[0]?._value === 0 ? 'text-bg-warning' : 'text-bg-success'">
+        {{ lvsw1Data[0]?._value + lvsw2Data[0]?._value === 0 ? "Standby" : "Operating" }}
+      </span>
+    </div>
+    <div v-else class="spinner-border spinner-border-sm text-light" role="status"></div>
+  </div>
+
+  <div v-if="allDataAvailable">
+    <div class="row gx-2">
+      <div v-for="card in mainCards" :key="card.label" class="col-md-4">
+        <div class="card rounded-0 mb-2">
+          <div class="card-header bg-dark text-light">{{ card.label }}</div>
+          <div class="card-body bg-dark-subtle">
+            <h6>{{ card.value }}</h6>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <template v-if="allDataAvailable">
-      <div class="row gx-2">
-        <div v-for="card in mainCards" :key="card.label" class="col-md-4">
-          <div class="card rounded-0 mb-2">
-            <div class="card-header bg-dark text-light">{{ card.label }}</div>
-            <div class="card-body bg-dark-subtle">
-              <h6>{{ card.value }}</h6>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Battery Storage System -->
-      <div class="card rounded-0 mb-2">
-        <NuxtLink :to="`/bss`" class="card-header bg-dark text-light text-decoration-none"> Battery Storage System</NuxtLink>
-        <div class="card-body bg-dark">
-          <div class="row gx-2">
-            <div v-for="card in batteryCards" :key="card.label" class="col-6">
-              <div class="card rounded-0 mb-2">
-                <div class="card-header bg-dark text-light">{{ card.label }}</div>
-                <div class="card-body bg-dark-subtle">
-                  <h6>{{ card.value }}</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row gx-2">
-            <div v-for="(d, index) in batteryStatus" :key="index" class="col-6">
-              <div class="card rounded-0 mb-2">
-                <div class="card-header bg-dark text-light">Status</div>
-                <div class="card-body bg-dark-subtle">
-                  <h6>
-                    {{ d > 0 ? "Discharging" : d <= -1 ? "Charging" : "-" }}
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Weather Station -->
-      <div class="card rounded-0 mb-2">
-        <div class="card-header bg-dark text-light">Weather Station</div>
-        <div class="card-body bg-dark">
-          <div class="d-flex flex-wrap justify-content-between">
-            <div v-for="field in dataFields" :key="field" class="card card-ws rounded-0 mb-2">
-              <div class="card-header bg-dark text-light text-wrap">{{ field }}</div>
+    <!-- Battery Storage System -->
+    <div class="card rounded-0 mb-2">
+      <NuxtLink :to="`/bss`" class="card-header bg-dark text-light text-decoration-none"> Battery Storage System</NuxtLink>
+      <div class="card-body bg-dark">
+        <div class="row gx-2">
+          <div v-for="card in batteryCards" :key="card.label" class="col-6">
+            <div class="card rounded-0 mb-2">
+              <div class="card-header bg-dark text-light">{{ card.label }}</div>
               <div class="card-body bg-dark-subtle">
-                <h6>{{ getValueByField(field) }} {{ getUnits(field) }}</h6>
+                <h6>{{ card.value }}</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row gx-2">
+          <div v-for="(d, index) in batteryStatus" :key="index" class="col-6">
+            <div class="card rounded-0 mb-2">
+              <div class="card-header bg-dark text-light">Status</div>
+              <div class="card-body bg-dark-subtle">
+                <h6>
+                  {{ d > 0 ? "Discharging" : d <= -1 ? "Charging" : "-" }}
+                </h6>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </template>
+    </div>
 
-    <div v-else class="text-center text-light p-3">
-      <div class="spinner-border text-light mb-2" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <!-- Weather Station -->
+    <div class="card rounded-0 mb-2">
+      <div class="card-header bg-dark text-light">Weather Station</div>
+      <div class="card-body bg-dark">
+        <div class="d-flex flex-wrap justify-content-between">
+          <div v-for="field in dataFields" :key="field" class="card card-ws rounded-0 mb-2">
+            <div class="card-header bg-dark text-light text-wrap">{{ field }}</div>
+            <div class="card-body bg-dark-subtle">
+              <h6>{{ getValueByField(field) }} {{ getUnits(field) }}</h6>
+            </div>
+          </div>
+        </div>
       </div>
-      <p>Memuat data PLTS...</p>
     </div>
   </div>
+
+  <div v-else class="text-center text-light p-3">
+    <div class="spinner-border text-light mb-2" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Memuat data PLTS...</p>
+  </div>
+  
 </template>
 
 <script setup>

@@ -1,13 +1,15 @@
-<!-- pages/index.vue -->
 <template>
   <section class="desktop">
-    <div class="container-fluid mx-4 mb-3">
+    <div class="container-fluid mb-3">
       <Error v-if="error" :message="error" />
-      <div v-else class="row text-center">
-        <h5 class="text-light mb-2">
-          {{ displayFrequency }}
-        </h5>
-        <div>
+      <div v-else class="row text-center mx-5">
+        <div class="col-md-6 p-4">
+          <Setting :settingData="settingParameter" />
+        </div>
+        <div class="card bg-dark rounded-0 border-2 border-light p-4 col-md-6">
+          <h5 class="text-light mb-2">
+            {{ displayFrequency }}
+          </h5>
           <Plts :weatherData="weatherData" :it1Data="it1Data" :it2Data="it2Data" :lvsw1Data="lvsw1Data" :lvsw2Data="lvsw2Data" />
         </div>
       </div>
@@ -16,8 +18,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import Plts from "@/components/Plts.vue";
+import Setting from "~/components/Setting.vue";
 import Error from "@/components/Error.vue";
 
 const weatherData = ref([]);
@@ -25,17 +28,26 @@ const lvsw1Data = ref([]);
 const lvsw2Data = ref([]);
 const it1Data = ref([]);
 const it2Data = ref([]);
+const settingParameter = ref([]);
 const error = ref(null);
 
 const fetchData = async () => {
   try {
-    const [weatherRes, lvsw1Res, lvsw2Res, it1Res, it2Res] = await Promise.all([$fetch("/api/weatherstation"), $fetch("/api/powermeter/LVSW1"), $fetch("/api/powermeter/LVSW2"), $fetch("/api/powermeter/IT1"), $fetch("/api/powermeter/IT2")]);
+    const [weatherRes, lvsw1Res, lvsw2Res, it1Res, it2Res, settingRes] = await Promise.all([
+      $fetch("/api/weatherstation"),
+      $fetch("/api/powermeter/LVSW1"),
+      $fetch("/api/powermeter/LVSW2"),
+      $fetch("/api/powermeter/IT1"),
+      $fetch("/api/powermeter/IT2"),
+      $fetch("/api/settingparameter"),
+    ]);
 
     weatherData.value = weatherRes?.data ?? [];
     lvsw1Data.value = lvsw1Res?.data ?? [];
     lvsw2Data.value = lvsw2Res?.data ?? [];
     it1Data.value = it1Res?.data ?? [];
     it2Data.value = it2Res?.data ?? [];
+    settingParameter.value = settingRes?.data ?? [];
   } catch (err) {
     error.value = err.message;
   }
