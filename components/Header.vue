@@ -9,7 +9,7 @@
         <div class="me-4 d-none d-md-flex">
           <Timer />
         </div>
-        <a href="/logout" class="logout btn btn-sm btn-danger border-2 border rounded-0 text-light"> Logout </a>
+        <img src="/img/icon.png" class="d-inline-block" height="40" alt="" />
       </div>
     </div>
   </nav>
@@ -25,13 +25,8 @@ h6 {
   font-weight: 700;
   font-size: 1.2rem;
 }
-span{
+span {
   margin: 0px;
   font-weight: 400;
-}
-@media screen and (max-width: 1000px) {
-  .logout {
-    font-size: 0.8rem;
-  }
 }
 </style>

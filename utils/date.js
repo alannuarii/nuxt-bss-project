@@ -50,6 +50,22 @@ export const date2 = (waktu) => {
 	return formattedTime;
 };
 
+export function date3(tanggal) {
+	const date = new Date(tanggal);
+	const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+	const result = date.toLocaleDateString('id-ID', options);
+	return result;
+	// 'Senin, 20 Februari 2023'
+}
+
+export const getYesterday = () => {
+	let tomorrow = new Date();
+	tomorrow.setHours(tomorrow.getHours() - 16);
+	tomorrow = tomorrow.toISOString().slice(0, 10);
+	return tomorrow;
+	// 2023-02-21 tanggal hari ini
+};
+
 
 
 

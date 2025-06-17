@@ -94,7 +94,7 @@
     <div class="spinner-border text-light mb-2" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
-    <p>Memuat data Setting Parameter...</p>
+    <p>Memuat data setting parameter...</p>
   </div>
 </template>
 

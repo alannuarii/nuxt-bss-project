@@ -6,11 +6,13 @@
       <slot />
     </div>
   </main>
+  <Menu />
 </template>
 
 <script setup>
 // Import komponen header
 import Header from "@/components/Header.vue";
+import Menu from "~/components/Menu.vue";
 
 // Metadata halaman
 useHead({

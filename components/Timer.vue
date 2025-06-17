@@ -7,12 +7,12 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
-import { date, getToday } from "@/utils/date.js";
+import { date3, getToday } from "@/utils/date.js";
 
 const time = ref("00:00:00");
 const today = getToday();
 
-const formattedDate = computed(() => date(today));
+const formattedDate = computed(() => date3(today));
 
 let interval;
 

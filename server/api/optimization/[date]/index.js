@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
             };
         }
 
-        const response = await $fetch(`http://10.10.10.100:5010/optimization/${date}`);
+        const response = await $fetch(`${process.env.ENDPOINT}/optimization/${date}`);
 
         if (response && response.data) {
             return {

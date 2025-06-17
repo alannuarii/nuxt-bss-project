@@ -1,12 +1,20 @@
 <template>
   <div class="container-fluid">
     <div class="row gx-0">
-      <div class="col-md-6 p-4 text-center">
+      <div class="text-center my-3">
+        <div class="btn-group">
+          <NuxtLink :to="`/optimization/${yesterday}`" class="btn btn-sm btn-secondary" :class="{ active: route.params.date === yesterday }" aria-current="page"> Hari Ini </NuxtLink>
+          <NuxtLink :to="`/optimization/${today}`" class="btn btn-sm btn-secondary" :class="{ active: route.params.date === today }"> Besok </NuxtLink>
+        </div>
+      </div>
+      <hr />
+
+      <div class="col-md-6 px-4 text-center">
         <Setting :settingData="settingParameter" />
       </div>
       <div class="col-md-6">
         <ClientOnly>
-          <PlotlyChart :x="x4" :y="y4" :title="'Min Irradiance'" />
+          <PlotlyChart :x="x4" :y="y4" :forecastDate="date" />
         </ClientOnly>
       </div>
     </div>
@@ -16,9 +24,17 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
+import { format, subDays } from "date-fns";
 import PlotlyChart from "~/components/PlotlyChart.vue";
 import { date2 } from "@/utils/date";
 import Setting from "~/components/Setting.vue";
+
+const route = useRoute();
+const date = route.params.date;
+
+const todayDate = new Date();
+const today = format(todayDate, "yyyy-MM-dd");
+const yesterday = format(subDays(todayDate, 1), "yyyy-MM-dd");
 
 const irr1 = ref([]);
 const irr2 = ref([]);
@@ -26,9 +42,6 @@ const irr3 = ref([]);
 const minIrr = ref([]);
 const maxIrr = ref([]);
 const error = ref(null);
-
-const route = useRoute();
-const date = route.params.date;
 
 const fetchOpt = async () => {
   try {
@@ -110,3 +123,9 @@ const settingParameter = computed(() => {
   ];
 });
 </script>
+
+<style scoped>
+.btn-group {
+  width: 20%;
+}
+</style>

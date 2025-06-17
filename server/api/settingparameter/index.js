@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
     try {
-        const response = await $fetch('http://10.10.10.100:5010/settingparameter');
-
+        const response = await $fetch(`${process.env.ENDPOINT}/settingparameter`);
+        
         // Jika response sukses dan memiliki data
         if (response && response.data) {
             return {

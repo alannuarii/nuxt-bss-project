@@ -1,6 +1,6 @@
 <template>
   <section class="desktop">
-    <div class="container-fluid mx-4">
+    <div class="container-fluid mx-4 mt-5">
       <div v-if="error" class="text-center text-light p-5">Error: {{ error }}</div>
 
       <div v-else class="row text-center">
@@ -110,8 +110,11 @@
               </div>
             </div>
 
-            <div v-else class="bg-dark text-light text-center">
-              <h5>Loading</h5>
+            <div v-else class="text-center text-light p-3">
+              <div class="spinner-border text-light mb-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p>Memuat data BSS...</p>
             </div>
           </div>
         </div>

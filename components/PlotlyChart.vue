@@ -1,46 +1,50 @@
 <template>
   <div>
+    <div class="mb-2 text-center">
+      <h4 class="text-light">Forecast Global Irradiance</h4>
+      <h5 class="text-light">{{ date(props.forecastDate) }}</h5>
+    </div>
     <div v-if="isLoading" class="text-center text-light p-3">
       <div class="spinner-border text-light mb-2" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
       <p>Memuat chart irradiance...</p>
     </div>
-    <div v-show="!isLoading" ref="plotlyContainer" class="chart"></div>
+    <div v-show="!isLoading" ref="plotlyContainer" class="chart-container"></div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, nextTick } from "vue";
+import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
 import Plotly from "plotly.js-dist-min";
+import { date } from "@/utils/date";
 
 const props = defineProps({
   x: { type: Array, required: true },
   y: { type: Array, required: true },
-  title: { type: String, default: "Chart Title" },
   display: { type: Object, default: () => ({ responsive: true }) },
+  forecastDate: { type: String, required: true },
 });
 
 const plotlyContainer = ref(null);
 const isLoading = ref(true);
 
-// Fungsi utama menggambar chart
 const drawChart = async () => {
-  isLoading.value = true;
+  if (!plotlyContainer.value) return;
 
-  await nextTick(); // Tunggu DOM dan binding siap
+  const hasData = Array.isArray(props.x) && props.x.length > 0 && Array.isArray(props.y) && props.y.length > 0;
 
-  if (!plotlyContainer.value) {
-    console.warn("Container chart belum siap.");
+  if (!hasData) {
+    console.warn("x atau y kosong atau tidak valid.");
     return;
   }
 
-  const trace1 = {
+  const trace = {
     x: props.x,
     y: props.y,
     mode: "lines",
     type: "scatter",
-    name: "Line Chart",
+    name: "Irradiance",
     line: {
       color: "rgb(67, 166, 163)",
       width: 1,
@@ -48,38 +52,70 @@ const drawChart = async () => {
   };
 
   const layout = {
-    title: props.title,
-    xaxis: { title: "Time" },
-    yaxis: { title: "Global Irradiance (Watt/m²)" },
+    xaxis: {
+      title: { text: "Time" },
+      showgrid: true,
+      zeroline: false,
+      tickangle: -45, // memiringkan label
+      tickformat: "%H:%M", // format waktu (jika data Date object)
+      automargin: true, // atur margin otomatis jika label panjang
+    },
+    yaxis: {
+      title: { text: "Global Irradiance (W/m²)" },
+      showgrid: true,
+      zeroline: false,
+    },
+    margin: { l: 60, r: 30, b: 50, t: 50 },
     autosize: true,
-    useResizeHandler: true,
-    // margin: { l: 40, r: 20, t: 40, b: 40 },
   };
 
   try {
-    await Plotly.newPlot(plotlyContainer.value, [trace1], layout, props.display);
-  } catch (error) {
-    console.error("Gagal menggambar chart:", error);
-  } finally {
-    isLoading.value = false;
+    await Plotly.newPlot(plotlyContainer.value, [trace], layout, props.display);
+    Plotly.Plots.resize(plotlyContainer.value);
+  } catch (err) {
+    console.error("Gagal render chart:", err);
   }
 };
 
-// Watcher: gambar chart ketika data siap
 watch(
-  () => [props.x, props.y],
-  ([x, y]) => {
-    const hasData = Array.isArray(x) && x.length > 0 && Array.isArray(y) && y.length > 0;
-    if (hasData) {
-      drawChart();
+  [() => props.x, () => props.y],
+  async ([x, y]) => {
+    if (Array.isArray(x) && x.length && Array.isArray(y) && y.length) {
+      isLoading.value = true;
+      await nextTick();
+      await drawChart();
+      isLoading.value = false;
     }
   },
   { immediate: true }
 );
+
+const resizeHandler = () => {
+  if (plotlyContainer.value) {
+    Plotly.Plots.resize(plotlyContainer.value);
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("resize", resizeHandler);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", resizeHandler);
+});
 </script>
 
 <style scoped>
-.chart {
+.chart-container {
   width: 100%;
+}
+h4 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+h5 {
+  font-size: 1rem;
+  font-weight: 400;
 }
 </style>
