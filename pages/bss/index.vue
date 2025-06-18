@@ -1,6 +1,6 @@
 <template>
   <section class="desktop">
-    <div class="container-fluid mx-4 mt-5">
+    <div class="container-fluid mx-4 mt-4">
       <div v-if="error" class="text-center text-light p-5">Error: {{ error }}</div>
 
       <div v-else class="row text-center">
@@ -56,9 +56,9 @@
         <div class="col-6">
           <div class="rounded-0 mb-2 mx-3">
             <div class="card-header bg-dark text-light">
-              <div class="bg-dark">
-                <button class="btn btn-sm rounded-0" :class="{ 'btn-secondary': activeTab === 'bss1', 'btn-light': activeTab !== 'bss1' }" @click="activeTab = 'bss1'">BSS 1</button>
-                <button class="btn btn-sm rounded-0" :class="{ 'btn-secondary': activeTab === 'bss2', 'btn-light': activeTab !== 'bss2' }" @click="activeTab = 'bss2'">BSS 2</button>
+              <div class="btn-group">
+                <button class="btn btn-sm btn-secondary" :class="{active:activeTab === 'bss1'}" @click="activeTab = 'bss1'">BSS 1</button>
+                <button class="btn btn-sm btn-secondary" :class="{active:activeTab === 'bss2'}" @click="activeTab = 'bss2'">BSS 2</button>
               </div>
             </div>
 
@@ -68,7 +68,7 @@
                 <h5 class="mb-2">BSS Feeder 1</h5>
                 <div class="bss-card-grid">
                   <div v-for="data in bss1Data" :key="data.id_bms" class="card bss-card rounded-0">
-                    <NuxtLink :to="`/plts/bss/bms/${data.id_bms}`" class="title btn text-light"> BMS {{ data.id_bms }} </NuxtLink>
+                    <NuxtLink :to="`/bss/bms/${data.id_bms}`" class="title btn text-light"> BMS {{ data.id_bms }} </NuxtLink>
                     <div class="progress">
                       <div
                         class="progress-bar"
@@ -91,7 +91,7 @@
                 <h5 class="mb-2">BSS Feeder 2</h5>
                 <div class="bss-card-grid">
                   <div v-for="data in bss2Data" :key="data.id_bms" class="card bss-card rounded-0">
-                    <NuxtLink :to="`/plts/bss/bms/${data.id_bms}`" class="title btn text-light"> BMS {{ data.id_bms }} </NuxtLink>
+                    <NuxtLink :to="`/bss/bms/${data.id_bms}`" class="title btn text-light"> BMS {{ data.id_bms }} </NuxtLink>
                     <div class="progress">
                       <div
                         class="progress-bar"
@@ -165,16 +165,8 @@ const handlePrevious = () => {
 
 const isDataAvailable = (data) => data && data.length > 0;
 
-let interval1, interval2;
 onMounted(() => {
   fetchData();
-  interval1 = setInterval(() => fetchBss("bss1").then((res) => (bss1Data.value = res)), 1000);
-  interval2 = setInterval(() => fetchBss("bss2").then((res) => (bss2Data.value = res)), 1000);
-});
-
-onUnmounted(() => {
-  clearInterval(interval1);
-  clearInterval(interval2);
 });
 </script>
 
@@ -235,5 +227,9 @@ input {
 p {
   margin: 0px;
   font-size: 0.7rem;
+}
+
+.btn-group {
+  width: 30%;
 }
 </style>

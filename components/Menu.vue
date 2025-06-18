@@ -14,7 +14,15 @@
     <!-- Container animasi muncul/hilang semua menu -->
     <transition name="fade-slide-up-wrapper">
       <div v-if="menuVisible" class="position-fixed start-0 p-2" :style="menuStyle">
-        <div v-for="item in menuItems" :key="item.to" class="mb-1 py-2 px-3 bg-white border rounded shadow-sm card-menu" style="min-width: 180px; cursor: pointer" @click="navigateAndClose(item.to)" role="button" tabindex="0">
+        <div
+          v-for="item in menuItems"
+          :key="item.to"
+          class="mb-1 py-2 px-3 bg-white border rounded shadow-sm card-menu"
+          style="min-width: 180px; cursor: pointer"
+          @click="handleMenuClick(item)"
+          role="button"
+          tabindex="0"
+        >
           <i :class="item.icon" class="me-1"></i>{{ item.label }}
         </div>
       </div>
@@ -30,12 +38,13 @@ import { getYesterday } from "@/utils/date";
 const menuVisible = ref(false);
 const buttonMargin = 16;
 const buttonSize = 20;
+
 const menuItems = ref([
   { label: "Home", to: "/", icon: "bi-house" },
   { label: "BSS", to: "/bss", icon: "bi-battery-charging" },
   { label: "Setting Parameter", to: `/optimization/${getYesterday()}`, icon: "bi-gear" },
   { label: "Rekap", to: "/rekap", icon: "bi-table" },
-  { label: "Logout", to: "/logout", icon: "bi-box-arrow-right" },
+  { label: "Logout", to: "logout", icon: "bi-box-arrow-right" },
 ]);
 
 const menuStyle = computed(() => ({
@@ -50,9 +59,20 @@ function toggleMenu() {
   menuVisible.value = !menuVisible.value;
 }
 
-function navigateAndClose(route) {
-  router.push(route);
+async function handleMenuClick(item) {
   menuVisible.value = false;
+
+  if (item.to === "logout") {
+    try {
+      await $fetch("/api/auth/logout", { method: "POST" });
+      await router.push("/auth/login");
+    } catch (err) {
+      console.error("Logout error:", err);
+      alert("Gagal logout. Coba lagi.");
+    }
+  } else {
+    router.push(item.to);
+  }
 }
 </script>
 

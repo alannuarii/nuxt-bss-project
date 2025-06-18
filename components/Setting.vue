@@ -4,7 +4,7 @@
     <h4 class="text-light">{{ date(today) }}</h4>
   </div>
   <div v-if="allDataAvailable" class="text-light text-start">
-    <div class="mb-5">
+    <div class="mb-4">
       <h5 class="mb-3">Forecast Produksi</h5>
 
       <div class="mb-2 row">

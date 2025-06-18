@@ -5,9 +5,9 @@
       <div v-else class="row text-center mx-5">
         <div class="col-md-6 p-4">
           <Setting :settingData="settingParameter" />
-          <NuxtLink :to="`/optimization/${getYesterday()}`" class="btn btn-sm btn-secondary mt-5"> <i class="bi-arrow-return-right me-1"></i>Detail </NuxtLink>
+          <NuxtLink :to="`/optimization/${getYesterday()}`" class="btn btn-sm btn-secondary mt-4"> <i class="bi-arrow-return-right me-1"></i>Detail </NuxtLink>
         </div>
-        <div class="card bg-dark rounded-0 border-2 border-light p-4 col-md-6">
+        <div class="col-md-6">
           <h5 class="text-light mb-2">
             {{ displayFrequency }}
           </h5>

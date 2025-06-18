@@ -53,7 +53,7 @@
     </div>
 
     <!-- Weather Station -->
-    <div class="card rounded-0 mb-2">
+    <div class="card rounded-0">
       <div class="card-header bg-dark text-light">Weather Station</div>
       <div class="card-body bg-dark">
         <div class="d-flex flex-wrap justify-content-between">

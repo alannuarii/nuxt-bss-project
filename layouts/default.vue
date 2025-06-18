@@ -20,7 +20,7 @@ useHead({
   meta: [
     {
       name: "description",
-      content: "Dashboard PLTD Tahuna",
+      content: "BSS Optima",
     },
   ],
 });

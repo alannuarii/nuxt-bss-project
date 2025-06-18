@@ -53,20 +53,27 @@ const drawChart = async () => {
 
   const layout = {
     xaxis: {
-      title: { text: "Time" },
+      title: { text: "Time", font: { color: "white" } },
       showgrid: true,
       zeroline: false,
-      tickangle: -45, // memiringkan label
-      tickformat: "%H:%M", // format waktu (jika data Date object)
-      automargin: true, // atur margin otomatis jika label panjang
+      tickangle: -45,
+      tickformat: "%H:%M",
+      tickfont: { color: "white" },
+      automargin: true,
+      gridcolor: "rgba(255, 255, 255, 0.1)",
     },
     yaxis: {
-      title: { text: "Global Irradiance (W/m²)" },
+      title: { text: "Global Irradiance (W/m²)", font: { color: "white" } },
       showgrid: true,
       zeroline: false,
+      tickfont: { color: "white" },
+      gridcolor: "rgba(255, 255, 255, 0.1)",
     },
     margin: { l: 60, r: 30, b: 50, t: 50 },
     autosize: true,
+    paper_bgcolor: "transparent",
+    plot_bgcolor: "transparent",
+    font: { color: "white" },
   };
 
   try {
