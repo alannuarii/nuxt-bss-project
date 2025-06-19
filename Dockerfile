@@ -31,8 +31,8 @@ RUN npm install
 # Copy seluruh file project
 COPY . .
 
-# Build project SvelteKit
+# Build project (SvelteKit atau Nuxt3 dengan adapter-node)
 RUN npm run build
 
-# Jalankan aplikasi dari hasil build
-CMD ["node", "build"]
+# Jalankan aplikasi dari hasil build SvelteKit/Nuxt
+CMD ["node", ".output/server/index.mjs"]
