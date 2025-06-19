@@ -57,8 +57,8 @@
           <div class="rounded-0 mb-2 mx-3">
             <div class="card-header bg-dark text-light">
               <div class="btn-group">
-                <button class="btn btn-sm btn-secondary" :class="{active:activeTab === 'bss1'}" @click="activeTab = 'bss1'">BSS 1</button>
-                <button class="btn btn-sm btn-secondary" :class="{active:activeTab === 'bss2'}" @click="activeTab = 'bss2'">BSS 2</button>
+                <button class="btn btn-sm btn-secondary" :class="{ active: activeTab === 'bss1' }" @click="activeTab = 'bss1'">BSS 1</button>
+                <button class="btn btn-sm btn-secondary" :class="{ active: activeTab === 'bss2' }" @click="activeTab = 'bss2'">BSS 2</button>
               </div>
             </div>
 
@@ -136,7 +136,7 @@ const fetchBss = async (feeder) => {
   try {
     const res = await $fetch(`/api/bss/${feeder}`);
     error.value = null;
-    return res;
+    return res.data || []; // langsung ambil data array
   } catch (err) {
     error.value = err.message;
     console.error(`Fetch error ${feeder}:`, err);

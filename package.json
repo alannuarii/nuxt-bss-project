@@ -16,11 +16,9 @@
     "bootstrap-icons": "^1.13.1",
     "date-fns": "^4.1.0",
     "eslint": "^9.28.0",
-    "mysql2": "^3.14.1",
     "nuxt": "^3.17.5",
     "plotly.js-dist-min": "^3.0.1",
     "vue": "^3.5.16",
-    "vue-router": "^4.5.1",
-    "vue3-plotly": "^0.0.7"
+    "vue-router": "^4.5.1"
   }
 }

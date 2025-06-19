@@ -1,13 +1,10 @@
 <template>
   <div class="login-wrapper d-flex">
-    <!-- Panel kiri sebagai background (kosong atau bisa diisi sesuai desain) -->
-    <div class="left-panel"></div>
-
     <!-- Panel kanan berisi form login -->
     <div class="right-panel d-flex flex-column justify-content-center align-items-center bg-dark">
       <form @submit.prevent="handleLogin" class="login-form p-4 w-100">
         <div class="icon-user text-center mb-4">
-         <img src="/public/img/iconhd.png" width="150" alt="">
+          <img src="/public/img/iconhd.png" width="150" alt="" />
         </div>
         <div class="mb-3">
           <label for="email" class="form-label visually-hidden">Username</label>
@@ -79,13 +76,6 @@ const handleLogin = async () => {
   height: 100vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
-}
-
-/* Panel kiri sebagai background biru keren */
-.left-panel {
-  width: 50%;
-  /* background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); */
-  /* clip-path: polygon(0 0, 80% 0, 100% 100%, 0 100%); */
 }
 
 /* Panel kanan berisi form login */

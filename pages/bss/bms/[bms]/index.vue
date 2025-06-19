@@ -95,9 +95,12 @@ let Plotly = null; // inisialisasi Plotly
 
 const fetchData = async (endpoint) => {
   try {
-    const res = await $fetch(`${endpoint}`);
+    const res = await $fetch(endpoint);
     error.value = null;
-    return res;
+
+    if (res?.data) return res.data; // ✅ ambil langsung array-nya
+
+    return res; // fallback
   } catch (err) {
     error.value = err.message;
     console.error(`Fetch error ${endpoint}:`, err);
