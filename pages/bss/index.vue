@@ -16,7 +16,7 @@
             </div>
 
             <label>Capacity</label>
-            <div class="progress mb-3 me-5">
+            <div class="progress mb-3">
               <div class="progress-bar" :style="{ width: (shortedData[activeIndex]?.capacity || 0).toFixed(2) + '%' }">{{ (shortedData[activeIndex]?.capacity || 0).toFixed(2) }}%</div>
             </div>
 
@@ -24,27 +24,27 @@
               <div class="col-4">
                 <div
                   v-for="item in [
-                    { label: 'RUL', value: shortedData[activeIndex]?.rul },
-                    { label: 'SOC', value: shortedData[activeIndex]?.soc },
-                    { label: 'Temperature', value: shortedData[activeIndex]?.temperature },
-                    { label: 'Min Voltage', value: shortedData[activeIndex]?.min_volt },
-                    { label: 'Max Voltage', value: shortedData[activeIndex]?.max_volt },
-                    { label: 'Avg Voltage', value: shortedData[activeIndex]?.avg_volt },
-                    { label: 'Total Voltage', value: shortedData[activeIndex]?.voltage },
+                    { label: 'RUL (Cycles)', value: shortedData[activeIndex]?.rul },
+                    { label: 'SOC (%)', value: shortedData[activeIndex]?.soc },
+                    { label: 'Temperature (°C)', value: shortedData[activeIndex]?.temperature },
+                    { label: 'Min Voltage (V)', value: shortedData[activeIndex]?.min_volt },
+                    { label: 'Max Voltage (V)', value: shortedData[activeIndex]?.max_volt },
+                    { label: 'Avg Voltage (V)', value: shortedData[activeIndex]?.avg_volt },
+                    { label: 'Total Voltage (V)', value: shortedData[activeIndex]?.voltage },
                   ]"
                   :key="item.label"
                   class="row mb-3"
                 >
-                  <label class="text-start col-sm-5 col-form-label">{{ item.label }}</label>
-                  <div class="col-sm-6">
+                  <label class="text-start col-sm-7 col-form-label">{{ item.label }}</label>
+                  <div class="col-sm-5">
                     <input type="text" class="text-center form-control form-control-sm" :value="item.value ?? '-'" disabled />
                   </div>
                 </div>
               </div>
 
-              <div v-for="col in [0, 1]" :key="col" class="col-4">
+              <div v-for="col in [0, 1]" :key="col" class="col-3 offset-1">
                 <div v-for="cell in Array.from({ length: 8 }, (_, i) => i + 1 + col * 8)" :key="cell" class="row mb-3">
-                  <label class="text-start col-sm-4 col-form-label">Cell {{ cell }}</label>
+                  <label class="text-end col-sm-6 col-form-label">Cell {{ cell }} (V)</label>
                   <div class="col-sm-6">
                     <input type="text" class="text-center form-control form-control-sm" :value="shortedData[activeIndex]?.[`cell${cell}`] ?? '-'" disabled />
                   </div>
