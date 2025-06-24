@@ -7,8 +7,7 @@
           <div class="text-light">
             <div class="">
               <div class="text-center">
-                <h4 class="fw-bold mb-0">BMS {{ activeData?.id_bms }}</h4>
-                <p>Ranked by lowest capacity of BMS</p>
+                <h4 class="fw-bold mb-2">BMS {{ activeData?.id_bms }}</h4>
               </div>
             </div>
 
