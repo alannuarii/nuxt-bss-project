@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <a class="navbar-brand text-light fw-bold" href="/">
         <img src="/img/np.png" alt="Logo" height="24" class="d-inline-block align-text-top me-3" />
-        <h6 class="d-none d-md-inline">BSS OPTIMA | <span>Machine Learning Based Battery Storage System Parameters Optimization</span></h6>
+        <h6 class="d-none d-md-inline">BSS OPTIMA | <span>Machine Learning Based Battery Storage System Parameters Optimization <span class="version">V2.0.0</span></span></h6>
       </a>
       <div class="d-flex align-items-center">
         <div class="me-4 d-none d-md-flex">
@@ -28,5 +28,8 @@ h6 {
 span {
   margin: 0px;
   font-weight: 400;
+}
+.version{
+  font-size: 0.8rem;
 }
 </style>
